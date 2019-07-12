@@ -25,7 +25,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header tc">
-          <h1>Kittenfriends</h1>
+          <h1 className="app-logo">Kittenfriends</h1>
           <SearchBox onSearchChange={this.searchChange} />
         </header>
         <div className="list-holder">
