@@ -16,10 +16,9 @@ class App extends Component {
   };
 
   render() {
-    const filteredCats = this.state.cats.filter(cat => {
-      return cat.name
-        .toLowerCase()
-        .includes(this.state.searchfield.toLowerCase());
+    const { cats, searchfield } = this.state;
+    const filteredCats = cats.filter(cat => {
+      return cat.name.toLowerCase().includes(searchfield.toLowerCase());
     });
 
     return (
