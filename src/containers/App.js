@@ -6,18 +6,30 @@ import { cats } from '../assets/cats';
 import './App.scss';
 
 class App extends Component {
+  state = {
+    cats: cats,
+    searchfield: ''
+  };
+
+  searchChange = event => {
+    this.setState({ searchfield: event.target.value });
+  };
+
   render() {
-    console.log(cats);
+    const filteredCats = this.state.cats.filter(cat => {
+      return cat.name
+        .toLowerCase()
+        .includes(this.state.searchfield.toLowerCase());
+    });
+
     return (
       <div className="App">
         <header className="App-header tc">
           <h1>Kittenfriends</h1>
-          <div>
-            <SearchBox />
-          </div>
+          <SearchBox onSearchChange={this.searchChange} />
         </header>
         <div className="list-holder">
-          {cats.map(cat => {
+          {filteredCats.map(cat => {
             return <Card key={cat.id} data={cat} />;
           })}
         </div>
