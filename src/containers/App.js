@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import Card from '../components/Card/Card';
 import SearchBox from '../components/SearchBox/SearchBox';
-
-import { cats } from '../assets/cats';
 import './App.scss';
 
 class App extends Component {
   state = {
-    cats: cats,
+    cats: [],
     searchfield: ''
   };
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      .then(users => {
+        this.setState({ cats: users });
+      });
+  }
 
   searchChange = event => {
     this.setState({ searchfield: event.target.value });
@@ -25,13 +31,19 @@ class App extends Component {
       <div className="App">
         <header className="App-header tc">
           <h1 className="app-logo">Kittenfriends</h1>
-          <SearchBox onSearchChange={this.searchChange} />
         </header>
-        <div className="list-holder">
-          {filteredCats.map(cat => {
-            return <Card key={cat.id} data={cat} />;
-          })}
-        </div>
+        {cats.length
+          ? <div className="tc">
+              <SearchBox onSearchChange={this.searchChange} />
+              <div className="list-holder">
+                {filteredCats.map(cat => {
+                  return <Card key={cat.id} data={cat} />;
+                })}
+              </div>
+            </div>
+          : <div className="tc">
+              <div className="spinner">Loading...</div>
+            </div>}
       </div>
     );
   }
