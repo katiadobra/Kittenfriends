@@ -1,9 +1,43 @@
 .app-logo {
   color: #fff;
+  font-size: 35px;
 }
 
 .list-holder {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.spinner {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 5px;
+  font-size: 0;
+  background: linear-gradient(
+    270deg,
+    #12c698,
+    #24c8c2,
+    #4e6dd0,
+    #d04e81,
+    #d07d4e
+  );
+  background-size: 1000% 1000%;
+
+  -webkit-animation: TextBackgroundAnimation 5s ease infinite;
+  -moz-animation: TextBackgroundAnimation 5s ease infinite;
+  animation: TextBackgroundAnimation 5s ease infinite;
+}
+
+@keyframes TextBackgroundAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
