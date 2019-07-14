@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Card from '../components/Card/Card';
+import CardList from './ItemsList/ItemsList';
 import SearchBox from '../components/SearchBox/SearchBox';
 import './App.scss';
+
+import ErrorBoundary from '../components/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -35,11 +37,9 @@ class App extends Component {
         {cats.length
           ? <div className="tc">
               <SearchBox onSearchChange={this.searchChange} />
-              <div className="list-holder">
-                {filteredCats.map(cat => {
-                  return <Card key={cat.id} data={cat} />;
-                })}
-              </div>
+              <ErrorBoundary>
+                <CardList list={filteredCats} />
+              </ErrorBoundary>
             </div>
           : <div className="tc">
               <div className="spinner">Loading...</div>
