@@ -25,6 +25,10 @@ const initialStateCats = {
   error: ''
 };
 
+/**
+ * @param {object} state
+ * @param {object} action
+ */
 export const requestCats = (state = initialStateCats, action = {}) => {
   switch (action.type) {
     case REQUEST_CATS_PENDING:
