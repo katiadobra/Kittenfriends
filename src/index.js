@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
 import './index.scss';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
@@ -9,7 +10,8 @@ import 'tachyons';
 
 import { searchCats } from './store/reducers';
 
-const store = createStore(searchCats);
+const logger = createLogger();
+const store = createStore(searchCats, applyMiddleware(logger));
 
 ReactDOM.render(
   <Provider store={store}>
