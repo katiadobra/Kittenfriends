@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import CardList from './ItemsList/ItemsList';
 import SearchBox from '../components/SearchBox/SearchBox';
 import './App.scss';
 
 import ErrorBoundary from '../components/ErrorBoundary';
+import { setSearchField } from '../store/actions';
 
 class App extends Component {
   state = {
-    cats: [],
-    searchfield: ''
+    cats: []
   };
 
   componentDidMount() {
@@ -19,14 +20,11 @@ class App extends Component {
       });
   }
 
-  searchChange = event => {
-    this.setState({ searchfield: event.target.value });
-  };
-
   render() {
-    const { cats, searchfield } = this.state;
+    const { cats } = this.state;
+    const { searchField, searchChange } = this.props;
     const filteredCats = cats.filter(cat => {
-      return cat.name.toLowerCase().includes(searchfield.toLowerCase());
+      return cat.name.toLowerCase().includes(searchField.toLowerCase());
     });
 
     return (
@@ -36,7 +34,7 @@ class App extends Component {
         </header>
         {cats.length
           ? <div className="tc">
-              <SearchBox onSearchChange={this.searchChange} />
+              <SearchBox onSearchChange={searchChange} />
               <ErrorBoundary>
                 <CardList list={filteredCats} />
               </ErrorBoundary>
@@ -49,4 +47,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    searchField: state.searchField
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    searchChange: event => dispatch(setSearchField(event.target.value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
